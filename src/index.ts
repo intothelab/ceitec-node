@@ -2,7 +2,6 @@
 
 import axios, { AxiosError, AxiosResponse } from "axios";
 import fs from "fs";
-// import path from "path";
 
 interface IFile {
   id: string;
@@ -52,8 +51,6 @@ const sendToServer = (data: Array<IFile>) => {
   axios.post("http://localhost:3000", data)
     .then((response: AxiosResponse) => console.log("OK"))
     .catch((error: AxiosError) => errorHandler(error));
-
-  // console.log(data);
 };
 
 const processFile = async (error: any, file: any) => {
@@ -64,8 +61,8 @@ const processFile = async (error: any, file: any) => {
   sendToServer(await parseFile(file));
 };
 
-setInterval(() => {
-  const file = "C:\\RAUL\\log_demo_ceitec.txt"; // path.join(__dirname, "../example.txt");
+const filePath = "C:\\RAUL\\log_demo_ceitec.txt";
 
-  fs.readFile(file, "utf8", processFile);
-}, 15000);
+fs.watch(filePath, (event, filename) => {
+  fs.readFile(filePath, "utf8", processFile);
+});
