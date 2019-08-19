@@ -1,8 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import axiosRetry from "axios-retry";
-import * as cron from "node-cron";
-import fs from "fs";
 import path from "path";
+import fs from "fs";
 
 axiosRetry(axios, { retries: 3 });
 axios.defaults.withCredentials = true;
@@ -52,6 +51,8 @@ const sendToServer = (data: Array<IFile>) => {
   axios.post("http://localhost:3000", data)
     .then((response: AxiosResponse) => console.log('OK'))
     .catch((error: AxiosError) => errorHandler(error));
+
+  // console.log(data);
 };
 
 const processFile = async (error: any, file: any) => {
@@ -62,15 +63,7 @@ const processFile = async (error: any, file: any) => {
   sendToServer(await parseFile(file));
 };
 
-const readFile = () => {
+setInterval(() => {
   const file = path.join(__dirname, "../example.txt");
-
   fs.readFile(file, "utf8", processFile);
-};
-
-cron.schedule("0 */1 * * * *", () => {
-  readFile();
-}, {
-  scheduled: true,
-  timezone: "America/Sao_Paulo",
-});
+}, 15000);
