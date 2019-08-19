@@ -15,7 +15,8 @@
     "build": "tsc",
     "dev": "ts-node-dev --respawn --transpileOnly --no-notify ./src/index.ts",
     "lint": "tslint \"src/**/*.ts\"",
-    "start": "npm run build && pm2 start ./dist/index.js"
+    "start": "npm run build && pm2 start ./dist/index.js && pm2 save",
+    "upgrade": "git pull && npm install && npm run build && pm2 reload 0 && pm2 save"
   },
   "devDependencies": {
     "@types/node": "^10.14.15",
