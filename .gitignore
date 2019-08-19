@@ -1,0 +1,17 @@
+# logs
+*.log
+npm-debug.log*
+
+# dependency
+node_modules
+
+# config
+.env
+
+# production
+dist
+
+# misc
+.DS_Store
+.directory
+.idea

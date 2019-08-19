@@ -1,0 +1,33 @@
+{
+  "name": "ceitec-node",
+  "version": "1.0.0",
+  "description": "ceitec-node",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "Samuel Cecilio <samuel@labventures.com.br> (http://labventures.com.br)",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "axios-retry": "^3.1.2",
+    "node-cron": "^2.0.3",
+    "typescript": "^3.5.3"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn --transpileOnly --no-notify ./src/index.ts",
+    "start": "npm run build && pm2 start ./dist/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^10.14.15",
+    "@types/node-cron": "^2.0.2",
+    "husky": "^2.7.0",
+    "lint-staged": "^8.2.1",
+    "ts-node-dev": "^1.0.0-pre.41",
+    "tslint": "^5.18.0"
+  },
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  }
+}
