@@ -9,18 +9,18 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
-    "axios-retry": "^3.1.2",
     "typescript": "^3.5.3"
   },
   "scripts": {
     "build": "tsc",
     "dev": "ts-node-dev --respawn --transpileOnly --no-notify ./src/index.ts",
+    "lint": "tslint \"src/**/*.ts\"",
     "start": "npm run build && pm2 start ./dist/index.js"
   },
   "devDependencies": {
     "@types/node": "^10.14.15",
-    "husky": "^2.7.0",
-    "lint-staged": "^8.2.1",
+    "husky": "^3.0.4",
+    "lint-staged": "^9.2.3",
     "ts-node-dev": "^1.0.0-pre.41",
     "tslint": "^5.18.0"
   },
