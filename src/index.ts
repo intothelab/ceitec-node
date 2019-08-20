@@ -9,6 +9,14 @@ interface IFile {
   antenna: string;
 }
 
+const responseHandler = (response: AxiosResponse) => {
+  let status = response.status;
+  let message = response.data.message || response.statusText;
+  let timestamp = new Date().toISOString();
+
+  console.log(`${timestamp}: [${status}] ${message}`);
+};
+
 const errorHandler = (error: any) => {
   let message = error.message;
   let timestamp = new Date().toISOString();
@@ -31,10 +39,13 @@ const parseLine = (line: Array<string>) => {
 };
 
 const parseFile = async (file: any) => {
+  let timestamp = new Date().toISOString();
   let lines: Array<string> = file.split("\n") || [];
   let arr = [];
 
   lines.shift();
+
+  console.log(`${timestamp}: Total de linhas: ${lines.length}.`);
 
   await asyncForEach(lines, (line: string) => {
     let current = line.split(",");
@@ -48,8 +59,12 @@ const parseFile = async (file: any) => {
 };
 
 const sendToServer = (data: Array<IFile>) => {
-  axios.post("http://localhost:3000", data)
-    .then((response: AxiosResponse) => console.log("OK"))
+  let timestamp = new Date().toISOString();
+
+  console.log(`${timestamp}: Enviando dados para o servidor...`);
+
+  axios.post("https://skylt.v-labs.co/api/ceitec", { data })
+    .then((response: AxiosResponse) => responseHandler(response))
     .catch((error: AxiosError) => errorHandler(error));
 };
 
@@ -64,5 +79,9 @@ const processFile = async (error: any, file: any) => {
 const filePath = "C:\\RAUL\\log_demo_ceitec.txt";
 
 fs.watch(filePath, (event, filename) => {
+  let timestamp = new Date().toISOString();
+
+  console.log(`${timestamp}: Arquivo alterado! Processando...`);
+
   fs.readFile(filePath, "utf8", processFile);
 });
