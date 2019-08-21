@@ -3,6 +3,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import fs from "fs";
 import path from "path";
+import config from "./config";
 
 interface IFile {
   id: string;
@@ -44,7 +45,13 @@ const parseFile = async (file: any) => {
   let lines: Array<string> = file.split("\n") || [];
   let arr = [];
 
+  lines = lines.filter((line: any) => line);
+
   lines.shift();
+
+  if (lines.length > parseInt(config.limitLines, 10)) {
+    lines = lines.slice(parseInt(config.limitLines, 10) * -1);
+  }
 
   console.log(`${timestamp}: Total de linhas: ${lines.length}.`);
 
@@ -64,7 +71,7 @@ const sendToServer = (data: Array<IFile>) => {
 
   console.log(`${timestamp}: Enviando dados para o servidor...`);
 
-  axios.post("https://skylt.v-labs.co/api/ceitec", { data })
+  axios.post(config.apiUrl, { data })
     .then((response: AxiosResponse) => responseHandler(response))
     .catch((error: AxiosError) => errorHandler(error));
 };
@@ -77,7 +84,7 @@ const processFile = async (error: any, file: any) => {
   sendToServer(await parseFile(file));
 };
 
-const filePath = path.win32.join("C:\\RAUL\\log_demo_ceitec.txt");
+const filePath = path.win32.join(config.filePath);
 
 fs.watch(filePath, (event, filename) => {
   let timestamp = new Date().toISOString();
