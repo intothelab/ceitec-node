@@ -17,15 +17,15 @@
     "build": "tsc",
     "dev": "ts-node-dev --respawn --transpileOnly --no-notify ./src/index.ts",
     "lint": "tslint \"src/**/*.ts\"",
-    "start": "npm run build && pm2 start ./dist/index.js && pm2 save",
-    "upgrade": "git pull && npm install && npm run build && pm2 reload 0 && pm2 save"
+    "start": "sh ./start",
+    "upgrade": "sh ./upgrade"
   },
   "devDependencies": {
-    "@types/node": "^10.14.15",
+    "@types/node": "^10.14.16",
     "husky": "^3.0.4",
     "lint-staged": "^9.2.3",
     "ts-node-dev": "^1.0.0-pre.41",
-    "tslint": "^5.18.0"
+    "tslint": "^5.19.0"
   },
   "engines": {
     "node": ">=10.0.0",
