@@ -2,6 +2,7 @@
 
 import axios, { AxiosError, AxiosResponse } from "axios";
 import fs from "fs";
+import path from "path";
 
 interface IFile {
   id: string;
@@ -76,7 +77,7 @@ const processFile = async (error: any, file: any) => {
   sendToServer(await parseFile(file));
 };
 
-const filePath = "C:\\RAUL\\log_demo_ceitec.txt";
+const filePath = path.win32.join("C:\\RAUL\\log_demo_ceitec.txt");
 
 fs.watch(filePath, (event, filename) => {
   let timestamp = new Date().toISOString();
